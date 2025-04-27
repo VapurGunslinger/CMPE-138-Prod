@@ -6,6 +6,15 @@ FROM `bigquery-public-data.bls.cpsaat18`
 
 WHERE sector = "Agriculture, forestry, fishing, and hunting"  and year <= 2022 
 
-// 
+// Gives the highest values of items in a given year and city 
+// Ps. Not currently correct. Help welcomed 
+SELECT value, item_name, area_name
 
+FROM `bigquery-public-data.bls.cpi_u`
+
+Where area_code ='0' and year = 2020
+
+Group By item_name , area_name, value
+
+limit 10
 
