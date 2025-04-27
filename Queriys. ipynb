@@ -1,1 +1,11 @@
+// Just to look at certain employment rates for a given field and demographics of the people
+
+SELECT  total_employed_in_thousands, percent_asian, year
+
+FROM `bigquery-public-data.bls.cpsaat18` 
+
+WHERE sector = "Agriculture, forestry, fishing, and hunting"  and year <= 2022 
+
+// 
+
 
