@@ -1,0 +1,16 @@
+// Total inflation by city for a specific year.
+// Rank cities by total price level.
+SELECT area_name, SUM(value) AS total_value
+FROM `bigquery-public-data.bls.cpi_u`
+WHERE year = 2022
+GROUP BY area_name
+ORDER BY total_value DESC;
+
+
+//Average inflation by category across all years
+// how each item performs over long term.
+
+SELECT item_name, AVG(value) AS avg_inflation
+FROM `bigquery-public-data.bls.cpi_u`
+GROUP BY item_name
+ORDER BY avg_inflation DESC;
