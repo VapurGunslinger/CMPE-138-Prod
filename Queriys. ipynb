@@ -4,14 +4,14 @@ SELECT  total_employed_in_thousands, percent_asian, year
 FROM `bigquery-public-data.bls.cpsaat18` 
 WHERE sector = "Agriculture, forestry, fishing, and hunting"  and year <= 2022 
 
-// Gives the highest values of items in a given year and city 
+// Gives the highest values of items in a given year. It looks through all cities
 // Fixed this works as I wanted it to. 
 SELECT item_name, value, area_name, date
 FROM (
   SELECT *,
          ROW_NUMBER() OVER (PARTITION BY item_name ORDER BY value DESC) AS rn
   FROM `bigquery-public-data.bls.cpi_u`
-  WHERE area_code = '0' AND year = 2020
+  WHERE  year = 2020
 )
 WHERE rn = 1
 ORDER BY value DESC
