@@ -6,12 +6,16 @@ WHERE sector = "Agriculture, forestry, fishing, and hunting"  and year <= 2022
 
 // Gives the highest values of items in a given year and city 
 // Ps. Not currently correct. Help welcomed 
-SELECT  DISTINCT item_name, value, area_name, date
-FROM `bigquery-public-data.bls.cpi_u`
-Where area_code ='0' and year = 2020
-Group By item_name, value  , area_name, date
-ORDER BY  value DESC
-limit 10
+SELECT item_name, value, area_name, date
+FROM (
+  SELECT *,
+         ROW_NUMBER() OVER (PARTITION BY item_name ORDER BY value DESC) AS rn
+  FROM `bigquery-public-data.bls.cpi_u`
+  WHERE area_code = '0' AND year = 2020
+)
+WHERE rn = 1
+ORDER BY value DESC
+LIMIT 10
 
 //Compare Up to 20 Grocery-Related Items Across Two Cities
 //3
