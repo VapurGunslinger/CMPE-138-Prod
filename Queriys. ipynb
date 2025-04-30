@@ -5,7 +5,7 @@ FROM `bigquery-public-data.bls.cpsaat18`
 WHERE sector = "Agriculture, forestry, fishing, and hunting"  and year <= 2022 
 
 // Gives the highest values of items in a given year and city 
-// Ps. Not currently correct. Help welcomed 
+// Fixed this works as I wanted it to. 
 SELECT item_name, value, area_name, date
 FROM (
   SELECT *,
