@@ -19,6 +19,7 @@ LIMIT 10
 
 //Compare Up to 20 Grocery-Related Items Across Two Cities
 //3
+
 SELECT year,item_name,area_name,AVG(value) AS avg_price_index
 FROM `bigquery-public-data.bls.cpi_u`
 WHERE
@@ -30,4 +31,12 @@ WHERE
 GROUP BY year, item_name, area_name
 ORDER BY year, area_name, item_name
 LIMIT 20;
+
+// For seeing the trend of an item in a given year. Example is tobacco products. 
+
+SELECT   item_name, value, area_name, date
+FROM `bigquery-public-data.bls.cpi_u`
+Where item_name= 'Tobacco and smoking products' and year = 2020
+ORDER By date
+
 
