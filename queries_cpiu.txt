@@ -5,7 +5,12 @@ FROM `bigquery-public-data.bls.cpi_u`
 WHERE year = 2022
 GROUP BY area_name
 ORDER BY total_value DESC;
+ //Notes
+Calculates the average inflation value (CPI value) for each item (e.g., "Bread", "Gasoline") across all years in the dataset.
+Then sorts the items from highest to lowest average inflation.
 
+To analyze long-term inflation for each item and identify goods or services with the highest average price increases over time.
+Helps users understand which products are most affected by inflation historically.
 
 //Average inflation by category across all years
 // how each item performs over long term.
@@ -14,3 +19,10 @@ SELECT item_name, AVG(value) AS avg_inflation
 FROM `bigquery-public-data.bls.cpi_u`
 GROUP BY item_name
 ORDER BY avg_inflation DESC;
+
+//Notes
+For the year 2020, it adds up all CPI values across all items for each city/area (e.g., "Los Angeles", "New York").
+Then ranks areas by their total value of inflation-related data.
+
+To compare overall inflation pressure in different U.S. cities for a single year.
+This is useful to rank cities by cost of living trends or inflation burden in a given year.
