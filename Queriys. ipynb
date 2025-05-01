@@ -24,7 +24,7 @@ ORDER BY
   FROM
     `bigquery-public-data.bls.cpi_u`
   WHERE
-    item_name= 'Tobacco and smoking products' and date BETWEEN '2020-01-01' AND '2021-12-31'
+    date BETWEEN '2020-01-01' AND '2021-12-31'
   QUALIFY ROW_NUMBER() OVER (
     PARTITION BY item_name, date
     ORDER BY value DESC
