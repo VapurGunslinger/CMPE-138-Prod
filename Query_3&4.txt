@@ -10,3 +10,4 @@ WHERE item_name = "Food and beverages"
   )
 GROUP BY year, item_name, area_name
 ORDER BY year, item_name, area_name;
+
