@@ -58,7 +58,6 @@ ORDER BY
   ORDER BY value DESC
   LIMIT 10
 
-
 // Comparing the inflation of a specific item across two different cities 
 // Query 3
 
@@ -71,6 +70,28 @@ WHERE item_name = "Food and beverages"
   )
 GROUP BY year, item_name, area_name
 ORDER BY year, item_name, area_name;
+
+// Query 4
+// Looks for items that have had a net decress in cost over a given time period
+WITH yearly_avg AS (
+  SELECT item_name, year, AVG(value) AS avg_value
+  FROM `bigquery-public-data.bls.cpi_u`
+  WHERE year IN (2011, 2021)  #inserting the available 10 years from the data
+  GROUP BY item_name, year ),
+
+pivoted AS (
+  SELECT item_name,
+    MAX(CASE WHEN year = 2011 THEN avg_value END) AS value_2011,
+    MAX(CASE WHEN year = 2021 THEN avg_value END) AS value_2021
+  FROM yearly_avg
+  GROUP By item_name )
+
+   SELECT item_name, value_2011, value_2021,
+   ROUND(value_2021 - value_2011, 2) AS net_change
+   FROM pivoted 
+   WHERE value_2021 < value_2011  #Net decrease
+   ORDER BY net_change ASC
+   LIMIT 10; #Showing top 10
 
 
 
