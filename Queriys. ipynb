@@ -7,8 +7,13 @@ WHERE sector = "Agriculture, forestry, fishing, and hunting"  and year <= 2022
 // Gives the highest values of items in a given year. It looks through all cities
 // Fixed this works as I wanted it to. 
 SELECT item_name, value, area_name, date
+
+
+
+// Optimised one
+
 FROM (
-  SELECT *,
+  SELECT  * EXCEPT (series_id,period,footnote_codes,survey_abbreviation ),
          ROW_NUMBER() OVER (PARTITION BY item_name ORDER BY value DESC) AS rn
   FROM `bigquery-public-data.bls.cpi_u`
   WHERE  year = 2020
