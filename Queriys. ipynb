@@ -1,9 +1,20 @@
-// Just to look at certain employment rates for a given field and demographics of the people
+// Is used to show the price change of a specific item in a given time period 
+#1
+// optimised
+SELECT 
+  item_name,date,value,area_name
+FROM
+  `bigquery-public-data.bls.cpi_u`
+WHERE
+  item_name = 'Tobacco and smoking products'
+  AND date >= '2020-01-01'
+  AND date <= '2021-12-31'
+QUALIFY
+  ROW_NUMBER() OVER (PARTITION BY date ORDER BY value DESC) = 1
+ORDER BY
+  date ASC
 
-  SELECT  total_employed_in_thousands, percent_asian, year
-  FROM `bigquery-public-data.bls.cpsaat18` 
-  WHERE sector = "Agriculture, forestry, fishing, and hunting"  and year <= 2022 
-
+#2
 // Gives the highest values of items in a given year. It looks through all cities
 // Fixed this works as I wanted it to. 
 
@@ -44,11 +55,6 @@
   ORDER BY year, area_name, item_name
   LIMIT 20;
 
-// For seeing the trend of an item in a given year. Example is tobacco products. 
 
-  SELECT   item_name, value, area_name, date
-  FROM `bigquery-public-data.bls.cpi_u`
-  Where item_name= 'Tobacco and smoking products' and year = 2020
-  ORDER By date
 
 
