@@ -42,15 +42,16 @@ ORDER BY
 
 
 // Unoptimised 
-  SELECT item_name, value, area_name, date
-  FROM (
-    SELECT item_name, value, area_name, date,ROW_NUMBER() OVER (PARTITION BY item_name ORDER BY value DESC) AS rn
-    FROM `bigquery-public-data.bls.cpi_u`
-    WHERE  year = 2020
-  )
-  WHERE rn = 1
-  ORDER BY value DESC
-  LIMIT 10
+ SELECT item_name, value, area_name, date
+FROM (
+  SELECT 
+    item_name, value, area_name, date, ROW_NUMBER() OVER (PARTITION BY item_name ORDER BY value DESC) AS rn
+  FROM bigquery-public-data.bls.cpi_u
+  WHERE year = 2020
+)
+WHERE rn = 1
+ORDER BY value DESC
+LIMIT 10;
 
 
 
