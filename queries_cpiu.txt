@@ -26,3 +26,12 @@ Then ranks areas by their total value of inflation-related data.
 
 To compare overall inflation pressure in different U.S. cities for a single year.
 This is useful to rank cities by cost of living trends or inflation burden in a given year.
+
+
+// optimized query 
+
+SELECT area_name, SUM(value) AS total_value
+FROM `bigquery-public-data.bls.cpi_u`
+WHERE year = 2020
+GROUP BY area_name
+ORDER BY total_value DESC;
