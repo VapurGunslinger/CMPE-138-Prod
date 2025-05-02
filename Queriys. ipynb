@@ -16,12 +16,12 @@ ORDER BY
 
 //unoptimized
 
-  SELECT
+   SELECT
     item_name ,date, value, area_name
   FROM
     `bigquery-public-data.bls.cpi_u`
   WHERE
-    date BETWEEN '2020-01-01' AND '2021-12-31'
+    item_name = 'Tobacco and smoking products' and date BETWEEN '2020-01-01' AND '2021-12-31'
   QUALIFY 
     ROW_NUMBER() OVER ( PARTITION BY item_name, date ORDER BY value DESC  ) = 1
   ORDER BY
