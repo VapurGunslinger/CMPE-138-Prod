@@ -32,3 +32,26 @@ pivoted AS (
    WHERE value_2021 < value_2011  #Net decrease
    ORDER BY net_change ASC
    LIMIT 10; #Showing top 10
+
+//Q4 Optimized
+WITH yearly_avg AS (
+ SELECT item_name, year, AVG(value) AS avg_value
+ FROM `bigquery-public-data.bls.cpi_u`
+ WHERE year IN (2015, 2020)  #5 years instead of 10 years from the data
+ GROUP BY item_name, year ),
+
+
+pivoted AS (
+ SELECT item_name,
+   MAX(CASE WHEN year = 2015 THEN avg_value END) AS value_2015,
+   MAX(CASE WHEN year = 2020 THEN avg_value END) AS value_2020
+ FROM yearly_avg
+ GROUP By item_name )
+
+
+  SELECT item_name, value_2015, value_2020,
+  ROUND(value_2020 - value_2015, 2) AS net_change
+  FROM pivoted
+  WHERE value_2020 < value_2015  #Net decrease
+  ORDER BY net_change ASC
+  LIMIT 10;
