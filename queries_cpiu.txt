@@ -1,3 +1,4 @@
+Arda Karayan
 // Total inflation by city for a specific year.
 // Rank cities by total price level.
 SELECT area_name, SUM(value) AS total_value
